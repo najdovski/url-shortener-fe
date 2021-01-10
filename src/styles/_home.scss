@@ -1,0 +1,36 @@
+.main-input {
+  border-color: $primary-border-color;
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem $primary-box-shadow-color;
+  }
+}
+
+.optional-input {
+  border-color: $secondary-border-color;
+
+  &:focus {
+    border-color: $secondary-border-color;
+    box-shadow: 0 0 0 0.2rem $secondary-border-color;
+  }
+}
+
+.big-icon {
+  -webkit-animation: rotating 7s linear infinite;
+  -moz-animation: rotating 7s linear infinite;
+  -ms-animation: rotating 7s linear infinite;
+  -o-animation: rotating 7s linear infinite;
+  animation: rotating 7s linear infinite;
+}
+
+.heading-big {
+  font-size: 1.3rem;
+
+  @include media-breakpoint-up(sm) {
+    font-size: 2rem;
+  }
+}
+
+.btn-cut-it {
+  max-height: 5.68rem;
+}

@@ -1,0 +1,26 @@
+.btn-register {
+  color: white;
+
+  &:hover {
+    background-color: white;
+    color: $primary !important;
+  }
+
+  &:active {
+    color: white !important;
+  }
+}
+
+.btn-login {
+  color: $secondary;
+
+  &:hover {
+    color: $primary !important;
+  }
+}
+
+.navbar-toggler {
+  &:focus {
+    outline: none;
+  }
+}

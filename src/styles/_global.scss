@@ -1,0 +1,15 @@
+* {
+  font-family: 'Oxygen', sans-serif;
+}
+
+a {
+  &:hover,
+  &:focus,
+  &:active {
+    box-shadow: none !important;
+  }
+}
+
+.lottie-custom {
+  max-width: 60rem;
+}
