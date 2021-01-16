@@ -1,0 +1,17 @@
+.register-lottie {
+  .attribution {
+    margin-top: -2rem;
+
+    @include media-breakpoint-up(sm) {
+      margin-top: -5rem;
+    }
+
+    @include media-breakpoint-up(md) {
+      margin-top: -2rem;
+    }
+
+    @include media-breakpoint-up(xl) {
+      margin-top: -3rem;
+    }
+  }
+}

@@ -24,13 +24,32 @@
 }
 
 .heading-big {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 
   @include media-breakpoint-up(sm) {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 }
 
 .btn-cut-it {
   max-height: 5.68rem;
+}
+
+.loader-row {
+  .loader-div {
+    margin-top: -5rem;
+
+    @include media-breakpoint-up(sm) {
+      max-width: 15rem;
+    }
+
+    @include media-breakpoint-up(md) {
+      max-width: 18rem;
+      margin-top: -8rem;
+    }
+  }
+}
+
+.home-lottie {
+  max-width: 60rem;
 }

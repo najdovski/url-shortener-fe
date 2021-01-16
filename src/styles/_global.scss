@@ -10,6 +10,18 @@ a {
   }
 }
 
-.lottie-custom {
-  max-width: 60rem;
+.loader-container {
+  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+}
+
+.modal-content {
+  opacity: 0.9;
+}
+
+.backdrop {
+  background: rgba(0, 0, 0, 0.6);
 }
