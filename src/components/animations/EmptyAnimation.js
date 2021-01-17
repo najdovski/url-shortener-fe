@@ -1,10 +1,10 @@
 import React from 'react';
 import Lottie from 'react-lottie';
-import animationData from './lotties/register-animation.json';
+import animationData from './lotties/empty.json';
 
-const RegisterAnimation = () => {
+const EmptyAnimation = () => {
   const options = {
-    loop: true,
+    loop: false,
     autoplay: true,
     animationData: animationData,
     rendererSettings: {
@@ -22,4 +22,4 @@ const RegisterAnimation = () => {
   )
 }
 
-export default RegisterAnimation
+export default EmptyAnimation

@@ -1,8 +1,8 @@
 import React from 'react';
 import Lottie from 'react-lottie';
-import animationData from './lotties/register-animation.json';
+import animationData from './lotties/not-found.json';
 
-const RegisterAnimation = () => {
+const NotFoundAnimation = () => {
   const options = {
     loop: true,
     autoplay: true,
@@ -22,4 +22,4 @@ const RegisterAnimation = () => {
   )
 }
 
-export default RegisterAnimation
+export default NotFoundAnimation

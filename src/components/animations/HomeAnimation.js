@@ -14,7 +14,10 @@ const HomeAnimation = () => {
 
   return (
     <div>
-      <Lottie options={options}/>
+      <Lottie
+        options={options}
+        isClickToPauseDisabled={true}
+      />
     </div>
   )
 }

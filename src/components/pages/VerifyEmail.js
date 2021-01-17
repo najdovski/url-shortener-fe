@@ -5,6 +5,7 @@ import Register from './Register';
 import Loading from '../animations/Loading';
 
 const VerifyEmail = () => {
+  document.title = `${process.env.REACT_APP_NAME} - Verify Email`;
   const [verifiedMessage, setVerifiedMessage] = useState('');
   const [alreadyVerifiedMessage, setAlreadyVerifiedMessage] = useState('');
   const [invalidVerificationURL, setInvalidVerificationURL] = useState('');
@@ -37,6 +38,7 @@ const VerifyEmail = () => {
       }
     });
   }, []);
+
   return (
     <>
       <div className={'container-fluid my-auto ' + (verifiedMessage || alreadyVerifiedMessage || invalidVerificationURL  ? 'd-none' : '')}>

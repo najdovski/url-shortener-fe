@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import RegisterAnimation from '../animations/RegisterAnimation';
 import NotificationModal from '../common/NotificationModal';
 import axios from 'axios';
 import Loader from '../common/Loader';
 
 const Register = ({message}) => {
+  document.title = `${process.env.REACT_APP_NAME} - Register`;
+
   const [propMessage, setPropMessage] = useState('');
   useEffect(() => {
     setPropMessage(message);
@@ -145,7 +147,7 @@ const Register = ({message}) => {
             </div>
             {resendEmail ?
               <div className="col align-self-center text-danger small">
-                <span className="cursor-pointer" onClick={handleResetEmail}><u>Resend confirmation email</u></span>
+                <span className="cursor-pointer" onClick={handleResetEmail}><u>Resend Confirmation Email</u></span>
               </div>
             : ''}
             <div className="col-4 mt-2">

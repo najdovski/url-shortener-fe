@@ -3,8 +3,12 @@ import HomeAnimation from '../animations/HomeAnimation';
 import NotificationModal from '../common/NotificationModal';
 import axios from 'axios';
 import Loader from '../common/Loader';
+import { useCookies } from 'react-cookie';
 
 const Home = () => {
+  document.title = process.env.REACT_APP_NAME;
+  const [cookies] = useCookies(['access_token']);
+
   const [formValidated, setFormValidated] = useState(false);
   const [originalUrl, setOriginalUrl] = useState('');
   const [shortenUrlSlug, setShortenUrlSlug] = useState('');
@@ -34,9 +38,10 @@ const Home = () => {
       url: `${process.env.REACT_APP_API_URL}/shorten`,
       data: {
         'original-url': originalUrl,
-        'shorten-url-slug': shortenUrlSlug
+        'shorten-url-slug': shortenUrlSlug,
       },
       headers: {
+        Authorization: `Bearer ${cookies['access_token']}`,
         'Content-Type': 'application/json'
       },
     }).then(response => {
@@ -97,9 +102,9 @@ const Home = () => {
           <div className="col-11 col-md-7 px-0">
             <form className={'row no-gutters ' + (formValidated ? 'was-validated' : '')} noValidate onSubmit={(event) => handleSubmit(event)}>
               <div className="col">
-                <input type="text" onChange={(e) => setOriginalUrl(e.target.value)} value={originalUrl} name="original-url" className="form-control py-4 main-input" placeholder="Paste your link" required/>
+                <input type="text" minLength="5" onChange={(e) => setOriginalUrl(e.target.value)} value={originalUrl} name="original-url" className="form-control py-4 main-input" placeholder="Paste your link" required/>
                 {validationFailedOriginalUrl ? <div className="small text-danger">{validationFailedOriginalUrl}</div> : ''}
-                <input type="text" onChange={(e) => setShortenUrlSlug(e.target.value)} value={shortenUrlSlug} name="shorten-url-slug" className="form-control mt-1 optional-input" placeholder="Optional custom short link ending"/>
+                <input type="text" minLength="3" onChange={(e) => setShortenUrlSlug(e.target.value)} value={shortenUrlSlug} name="shorten-url-slug" className="form-control mt-1 optional-input" placeholder="Optional custom short link ending"/>
                 {validationFailedShortenUrlSlug ? <div className="small text-danger">{validationFailedShortenUrlSlug}</div> : ''}
               </div>
               <div className="col-3 col-sm-2 pl-1">

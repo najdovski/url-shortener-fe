@@ -1,8 +1,20 @@
-import React from 'react';
-import { Link  } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 const Navbar = () => {
+  const [cookies, removeCookie] = useCookies(['access_token']);
+  const [redirect, setRedirect] = useState(false);
+
+  const handleLogout = () => {
+    let expirationTime = new Date(); // make it expired
+    removeCookie('access_token', '', { path: '/', expires: expirationTime });
+    setRedirect(true);
+  }
+
   return (
+    <>
+    {redirect ? <Redirect to="/" /> : null}
     <nav className="navbar navbar-expand-sm navbar-light">
       <Link to="/" className="navbar-brand"><i className="fas fa-link mr-2 text-primary"></i><span className="font-weight-bold">{process.env.REACT_APP_NAME}</span></Link>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,14 +23,16 @@ const Navbar = () => {
       <div className="collapse navbar-collapse" id="navbar">
         <ul className="navbar-nav ml-auto mt-2 mt-sm-0">
           <li className="nav-item">
-            <Link to="/register" className="nav-link btn btn-primary btn-register px-3 mx-1 font-weight-bold rounded-0 text-white">Register</Link>
-          </li>
+            <Link to={cookies['access_token'] ? '/my-urls' : '/register'} className="nav-link btn btn-primary btn-register px-3 mx-1 font-weight-bold rounded-0 text-white">{cookies['access_token'] ? 'My URLs' : 'Register'}</Link>
+          </li> 
           <li className="nav-item">
-            <Link to="/login" className="nav-link btn btn-login px-3 mx-1 font-weight-bold rounded-0"><u>Login</u></Link>
+            {cookies['access_token'] ? 
+            <span onClick={() => handleLogout()} className="nav-link btn btn-login font-weight-bold rounded-0"><u>Logout</u></span> : <Link to="/login" className="nav-link btn btn-login px-3 mx-1 font-weight-bold rounded-0"><u>Login</u></Link>}
           </li>
         </ul>
       </div>
     </nav>
+    </>
   )
 }
 

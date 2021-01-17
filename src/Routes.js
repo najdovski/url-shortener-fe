@@ -6,7 +6,8 @@ import Home from './components/pages/Home';
 import Register from './components/pages/Register';
 import Login from './components/pages/Login';
 import VerifyEmail from './components/pages/VerifyEmail';
-import NotFound from './components/pages/NotFound';
+import RedirectOrNotFound from './components/pages/RedirectOrNotFound';
+import MyUrls from './components/pages/protected/MyUrls';
 
 const Routes = () => {
   return (
@@ -43,7 +44,15 @@ const Routes = () => {
         </>
       } />
 
-      <Route path="*" component={NotFound} />
+      <Route exact path="/my-urls" render={() =>
+        <>
+          <Navbar />
+            <MyUrls />
+          <Footer />
+        </>
+      } />
+
+      <Route path="*" component={RedirectOrNotFound} />
     </Switch>
   )
 }
