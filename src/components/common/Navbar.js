@@ -24,7 +24,12 @@ const Navbar = () => {
         <ul className="navbar-nav ml-auto mt-2 mt-sm-0">
           <li className="nav-item">
             <Link to={cookies['access_token'] ? '/my-urls' : '/register'} className="nav-link btn btn-primary btn-register px-3 mx-1 font-weight-bold rounded-0 text-white">{cookies['access_token'] ? 'My URLs' : 'Register'}</Link>
-          </li> 
+          </li>
+          {cookies['access_token'] ? 
+            <li className="nav-item my-2 my-sm-0">
+              <Link to="/profile" className="nav-link btn btn-primary btn-register px-3 mx-1 font-weight-bold rounded-0 text-white">Profile</Link>
+            </li>
+          : null }
           <li className="nav-item">
             {cookies['access_token'] ? 
             <span onClick={() => handleLogout()} className="nav-link btn btn-login font-weight-bold rounded-0"><u>Logout</u></span> : <Link to="/login" className="nav-link btn btn-login px-3 mx-1 font-weight-bold rounded-0"><u>Login</u></Link>}

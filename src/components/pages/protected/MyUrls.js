@@ -1,18 +1,23 @@
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import Loader from '../../common/Loader';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import MyUrl from '../../partials/MyUrl';
 import EmptyAnimation from '../../animations/EmptyAnimation';
+import NotificationModal from '../../common/NotificationModal';
 
 const MyUrls = () => {
   document.title = `${process.env.REACT_APP_NAME} - My URLs`;
 
   const [cookies] = useCookies(['access_token']);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   const [myUrls, setMyUrls] = useState();
   const [showLoader, setShowLoader] = useState(true);
+
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     axios({
@@ -27,10 +32,9 @@ const MyUrls = () => {
       setIsAuthenticated(true);
       fetchMyUrls();
     })
-    .catch(error => {
-      console.log(error);
+    .catch(() => {
       setIsAuthenticated(false);
-    });
+    })
   }, []);
 
   const fetchMyUrls = () => {
@@ -54,24 +58,59 @@ const MyUrls = () => {
   const handleFetchAgain = () => {
     fetchMyUrls();
   }
+  
+  if (!cookies['access_token']) {
+    return (
+      <Redirect to ="/login" />
+    )
+  }
+
+  const handleSuccessMessage = (msg) => {
+    setSuccessMessage(msg);
+  }
+
+  const handleErrorMessage = (msg) => {
+    setErrorMessage(msg);
+  }
 
   return (
     <>
-      {/* {!isAuthenticated ? <Redirect to="/login" /> : null} */}
+      {successMessage ? <NotificationModal closeModal={() => setSuccessMessage('')} message={{ text: successMessage, error: false }} /> : ''}
+      {errorMessage ? <NotificationModal closeModal={() => setErrorMessage('')} message={{ text: errorMessage, error: true }} /> : ''}
       {showLoader ? <Loader /> : null}
-      {myUrls ?
+      {isAuthenticated && myUrls ?
         <div className={'container-fluid mt-3 my-urls ' + (myUrls.length <= 0 ? 'my-auto' : '')}>
-          <div className="row px-3">
+          {myUrls.length > 0 ? 
+            <div className="row justify-content-center">
+              <div className="col-12 text-center bg-primary text-white mb-4 py-2 font-weight-bold h5">
+                My URLs
+              </div>
+            </div>
+            :
+            null
+          }
+          <div className="row px-3 justify-content-center justify-content-lg-start">
             {myUrls.length > 0 ? myUrls.map((url, id) => {
               return (
-                <MyUrl url={url} setFetchUrlsAgain={handleFetchAgain} key={id} />
+                <MyUrl
+                  key={id}
+                  url={url}
+                  setFetchUrlsAgain={handleFetchAgain}
+                  successMessage={(msg) => handleSuccessMessage(msg)}
+                  errorMessage={(msg) => handleErrorMessage(msg)}
+                />
               )
             })
             :
-            <div className="col-12">
+            <div className="col-12 mt-5">
               <div className="row justify-content-center">
-                <div className="col-12 col-sm-9 col-md-6 col-xl-5">
-                  <EmptyAnimation />
+                <div className="col-12 text-center  text-dark its-empty-here font-weight-bold">
+                  IT'S <span className="text-primary">EMPTY</span> HERE
+                </div>
+                <div className="col-12 col-sm-9 col-md-6 col-xl-4">
+                  <div className="lottie-animation empty-animation mx-auto">
+                    <EmptyAnimation />
+                  </div>
                   <div className="mr-sm-4 mr-lg-5 small text-right"><a target="_blank" rel="noopener noreferrer" href="https://lottiefiles.com/5081-empty-box">Taha Sami @LottieFiles</a></div>
                 </div>
               </div>
@@ -80,7 +119,8 @@ const MyUrls = () => {
           </div>
         </div>
         :
-        null}
+          null
+        }
     </>
   )
 }

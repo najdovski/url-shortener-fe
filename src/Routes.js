@@ -8,6 +8,8 @@ import Login from './components/pages/Login';
 import VerifyEmail from './components/pages/VerifyEmail';
 import RedirectOrNotFound from './components/pages/RedirectOrNotFound';
 import MyUrls from './components/pages/protected/MyUrls';
+import Profile from './components/pages/protected/Profile';
+import ResetPassword from './components/pages/ResetPassword';
 
 const Routes = () => {
   return (
@@ -48,6 +50,22 @@ const Routes = () => {
         <>
           <Navbar />
             <MyUrls />
+          <Footer />
+        </>
+      } />
+
+      <Route exact path="/profile" render={() =>
+        <>
+          <Navbar />
+            <Profile />
+          <Footer />
+        </>
+      } />
+
+      <Route path="/forgot-password" render={() =>
+        <>
+          <Navbar />
+            <ResetPassword />
           <Footer />
         </>
       } />

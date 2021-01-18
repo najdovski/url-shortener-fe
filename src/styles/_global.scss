@@ -45,3 +45,20 @@ a {
 .x-small {
   font-size: 0.72rem;
 }
+
+.lottie-animation {
+  position: relative;
+  z-index: -1;
+  max-width: 38rem;
+
+  svg {
+    max-height: 65rem;
+  }
+}
+
+.lottie-animation-404 {
+  position: relative;
+  z-index: -1;
+
+  max-width: 65rem;
+}

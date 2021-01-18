@@ -27,8 +27,6 @@ const Login = ({message}) => {
 
   const [redirect, setRedirect] = useState(false);
 
-  const [, setCookie] = useCookies(['access_token']);
-
   const storeAccessToken = (token) => {
     let expirationTime = new Date();
     expirationTime.setTime(expirationTime.getTime() + (4320*60*1000)); // 3 days
@@ -48,7 +46,7 @@ const Login = ({message}) => {
 
     axios({
       method: 'post',
-      url: `${process.env.REACT_APP_API_URL}/login`,
+      url: resetPassword ? `${process.env.REACT_APP_API_URL}/forgot-password` : `${process.env.REACT_APP_API_URL}/login`,
       data: {
         'email': email,
         'password': password,
@@ -57,12 +55,16 @@ const Login = ({message}) => {
         'Content-Type': 'application/json'
       },
     }).then(response => {
-      storeAccessToken(response.data['access_token']);
       setSuccessMessage(response.data.message);
       setErrorMessage('');
       setEmail('');
       setPassword('');
-      setRedirect(true);
+      if (!resetPassword) {
+        storeAccessToken(response.data['access_token']);
+        setRedirect(true);
+      } else {
+        setShowLoader(false);
+      }
     }).catch(error => {
       setErrorMessage(error.response.data.message);
       setSuccessMessage('');
@@ -84,15 +86,29 @@ const Login = ({message}) => {
     setResetPassword(!resetPassword);
   }
 
+  const [cookies, setCookie] = useCookies(['access_token']);
+
+  if (cookies['access_token']) {
+    return (
+      <Redirect to="/my-urls" />
+    );
+  }
+
   return (
     <>
-      {redirect ? <Redirect to="/my-urls" /> : null}
+      {redirect ? <Redirect to="/my-urls"  /> : null}
       {showLoader ? <Loader /> : null}
       <div className={'container-fluid transition-slow my-auto' + (showLoader ? ' disabled-div' : '')}>
         <div className="row justify-content-center">
-          <div className="col-10 col-sm-9 col-md-5 col-lg-4 text-right register-lottie">
-            <LoginAnimation />
-            <div className="mr-sm-4 mr-lg-5 small mb-4"><a target="_blank" rel="noopener noreferrer" href="https://lottiefiles.com/38435-register">Avinash Reddy @LottieFiles</a></div>
+          <div className="col-8 col-sm-6 col-lg-4 col-xl-2 text-right register-lottie">
+            <div className="lottie-animation mx-auto">
+              <LoginAnimation />
+            </div>
+          </div>
+        </div>
+        <div className="row justify-content-center">
+          <div className="col-8 col-sm-6 col-lg-4 col-xl-3 mt-3 text-right">
+            <div className="small mb-4"><a target="_blank" rel="noopener noreferrer" href="https://lottiefiles.com/38435-register">Avinash Reddy @LottieFiles</a></div>
           </div>
         </div>
         {successMessage ? <NotificationModal closeModal={() => setSuccessMessage('')} message={{ text: successMessage, error: false }} /> : ''}
@@ -114,7 +130,7 @@ const Login = ({message}) => {
               <div className="col align-self-center text-danger small">
                 <span className="cursor-pointer" onClick={handleResetPassword}><u>{resetPassword ? 'Back to Login' : 'Forgot Password?' }</u></span>
               </div>
-              <div className="col-4 mt-2">
+              <div className="col-7 col-sm-4 mt-2">
                 <button className="btn btn-block btn-primary py-3">
                   <span className="font-weight-bold">{resetPassword ? 'Reset Password' : 'Login' }</span>
                 </button>

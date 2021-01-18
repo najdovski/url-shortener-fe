@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Login from './Login';
 import Register from './Register';
-import Loading from '../animations/Loading';
+import Loader from '../common/Loader';
 
 const VerifyEmail = () => {
   document.title = `${process.env.REACT_APP_NAME} - Verify Email`;
@@ -41,16 +41,7 @@ const VerifyEmail = () => {
 
   return (
     <>
-      <div className={'container-fluid my-auto ' + (verifiedMessage || alreadyVerifiedMessage || invalidVerificationURL  ? 'd-none' : '')}>
-        <div className="row justify-content-center">
-          <div className="col-12 text-center">
-            You are being verified...
-          </div>
-          <div className="col-2">
-            <Loading />
-          </div>
-        </div>
-      </div>
+      {verifiedMessage || alreadyVerifiedMessage || invalidVerificationURL ? null : <Loader /> }{}
       {verifiedMessage ? <Login message={{ text: verifiedMessage, error: false }} /> : ''}
       {alreadyVerifiedMessage ? <Login message={{ text: alreadyVerifiedMessage, error: false }} /> : ''}
       {invalidVerificationURL ? <Register message={{ text: invalidVerificationURL, error: true }} /> : ''}

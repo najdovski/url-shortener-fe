@@ -2,16 +2,12 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
-import NotificationModal from '../common/NotificationModal';
 
-const MyUrl = ({url, setFetchUrlsAgain}) => {
+const MyUrl = ({url, setFetchUrlsAgain, successMessage, errorMessage}) => {
   const [cookies] = useCookies(['access_token']);
 
   const [editLink, setEditLink] = useState(false);
   const [formValidated, setFormValidated] = useState(false);
-
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
 
   const [validationFailedOriginalUrl, setValidationFailedOriginalUrl] = useState('');
   const [validationFailedShortenUrlSlug, setValidationFailedShortenUrlSlug] = useState('');
@@ -67,16 +63,16 @@ const MyUrl = ({url, setFetchUrlsAgain}) => {
         'Content-Type': 'application/json'
       },
     }).then(response => {
-      setSuccessMessage(response.data.message);
-      setErrorMessage('');
+      successMessage(response.data.message);
+      errorMessage('');
       setValidationFailedOriginalUrl('');
       setValidationFailedShortenUrlSlug('');
       setEditLink(false);
       setFetchUrlsAgain(true);
     })
     .catch((error) => {
-      setErrorMessage(error.response.data.message);
-      setSuccessMessage('');
+      errorMessage(error.response.data.message);
+      successMessage('');
       if (error.response.data['errors'] && error.response.data['errors']['new-shorten-url-slug']) {
         setValidationFailedShortenUrlSlug(error.response.data['errors']['new-shorten-url-slug']);
       } else {
@@ -100,13 +96,13 @@ const MyUrl = ({url, setFetchUrlsAgain}) => {
         'Content-Type': 'application/json'
       },
     }).then(response => {
-      setSuccessMessage(response.data.message);
-      setErrorMessage('');
+      successMessage(response.data.message);
+      errorMessage('');
       setFetchUrlsAgain(true);
     })
     .catch((error) => {
-      setErrorMessage(error.response.data.message);
-      setSuccessMessage('');
+      errorMessage(error.response.data.message);
+      successMessage('');
       if (error.response.data['errors'] && error.response.data['errors']['new-shorten-url-slug']) {
         setValidationFailedShortenUrlSlug(error.response.data['errors']['new-shorten-url-slug']);
       } else {
@@ -116,9 +112,7 @@ const MyUrl = ({url, setFetchUrlsAgain}) => {
   }
 
   return (
-    <div className="col-4 rounded px-4">
-      {errorMessage ? <NotificationModal closeModal={() => setErrorMessage('')} message={{ text: errorMessage, error: true }} /> : ''}
-      {successMessage ? <NotificationModal closeModal={() => setSuccessMessage('')} message={{ text: successMessage, error: false }} /> : ''}
+    <div className="col-12 col-md-9 col-lg-6 col-xl-4 rounded px-4">
       <form className={'row shadow-custom pt-3 mb-4 rounded ' + (formValidated ? 'was-validated' : '')} noValidate onSubmit={(e) => handleFormSubmit(e)}>
         <div className="col-12 text-center">
           <div className="row justify-content-center">
@@ -135,9 +129,9 @@ const MyUrl = ({url, setFetchUrlsAgain}) => {
         <div className="col-12 h5">
           {
             editLink ?
-            <input type="text" minLength="3" className="form-control text-muted my-2 py-2" id="slug" onChange={(e) => handleFormChange(e)} value={values.shorten_url_slug}/>
+            <input type="text" minLength="3" maxLength="20" className="form-control text-muted mt-2 py-2" id="slug" onChange={(e) => handleFormChange(e)} value={values.shorten_url_slug}/>
             :
-            <a target="_blank" onClick={() => updateVisited()} rel="noopener noreferrer" href={url.shorten_url_slug} to={url.shorten_url_slug} className="form-control border-0 no-decorations bg-primary text-white my-2 py-2">{`${process.env.REACT_APP_URL_NO_PROTOCOL}/${url.shorten_url_slug}`}</a>
+            <a target="_blank" onClick={() => updateVisited()} rel="noopener noreferrer" href={url.shorten_url_slug} to={url.shorten_url_slug} className="form-control border-0 no-decorations bg-primary text-white mt-2 py-2">{`${process.env.REACT_APP_URL_NO_PROTOCOL}/${url.shorten_url_slug}`}</a>
           }
           {validationFailedShortenUrlSlug ? <div className="x-small text-danger">{validationFailedShortenUrlSlug}</div> : ''}
         </div>
@@ -153,7 +147,7 @@ const MyUrl = ({url, setFetchUrlsAgain}) => {
         </div>
         <div className="col-12">
           {editLink ? 
-            <button className="btn btn-block btn-success mt-4 py-1">Update</button>
+            <button className="btn btn-block btn-success mt-3 py-1">Update</button>
             :
             null  
           }
@@ -163,10 +157,10 @@ const MyUrl = ({url, setFetchUrlsAgain}) => {
             <div className="col-12 text-right">
               <div className="row">
                 <div className="col-auto align-self-center text-muted small text-left font-weight-bold">{moment(url.created_at).fromNow()}</div>
-                <div className="col align-self-centerf text-right text-muted small">
-                  <div className="row no-gutters">
+                <div className="col-12 col-sm text-left text-sm-right text-muted small">
+                  <div className="row no-gutters mt-1 mt-sm-0">
                     <div className="col align-self-center">{url.created_at !== url.updated_at ? `Updated ${moment(url.updated_at).fromNow()}` : ''}</div>
-                    <div className="col-auto align-self-center"><i className="fas fa-eye ml-3"></i> {values.visited}</div>
+                    <div className="col-12 col-sm-auto align-self-center"><i className="fas fa-eye ml-sm-3"></i> {values.visited}</div>
                   </div>
                 </div>
               </div>

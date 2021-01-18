@@ -1,11 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import RegisterAnimation from '../animations/RegisterAnimation';
 import NotificationModal from '../common/NotificationModal';
 import axios from 'axios';
 import Loader from '../common/Loader';
+import { useCookies } from 'react-cookie';
 
 const Register = ({message}) => {
   document.title = `${process.env.REACT_APP_NAME} - Register`;
+  const [cookies] = useCookies(['access_token']);
 
   const [propMessage, setPropMessage] = useState('');
   useEffect(() => {
@@ -114,13 +117,17 @@ const Register = ({message}) => {
       setShowLoader(false)
     });
   }
+
   return (
     <>
+    {cookies['access_token'] ? <Redirect to ="/" /> : null}
     {showLoader ? <Loader /> : null}
     <div className={'container-fluid transition-slow my-auto' + (showLoader ? ' disabled-div' : '')}>
       <div className="row justify-content-center">
         <div className="col-10 col-sm-9 col-md-5 col-lg-4 text-right register-lottie">
-          <RegisterAnimation />
+          <div className="lottie-animation mx-auto">
+            <RegisterAnimation />
+          </div>
           <div className="mr-sm-4 mr-lg-5 small mb-4"><a target="_blank" rel="noopener noreferrer" href="https://lottiefiles.com/38435-register">Avinash Reddy @LottieFiles</a></div>
         </div>
       </div>
@@ -131,7 +138,7 @@ const Register = ({message}) => {
         <div className="col-11 col-md-7 col-xl-5 px-0">
           <form className={'row justify-content-end no-gutters ' + (formValidated ? 'was-validated' : '')} noValidate onSubmit={(event) => handleSubmit(event)}>
             <div className="col-12">
-              <input type="text" onChange={(e) => setRegisterName(e.target.value)} value={registerName} name="name" className="form-control py-4 main-input" placeholder="Your name" required/>
+              <input type="text" minLength="3" maxLength="100" onChange={(e) => setRegisterName(e.target.value)} value={registerName} name="name" className="form-control py-4 main-input" placeholder="Your name" required/>
               {validationFailedRegisterName ? <div className="small text-danger">{validationFailedRegisterName}</div> : ''}
             </div>
             <div className="col-12 mt-2">
@@ -150,7 +157,7 @@ const Register = ({message}) => {
                 <span className="cursor-pointer" onClick={handleResetEmail}><u>Resend Confirmation Email</u></span>
               </div>
             : ''}
-            <div className="col-4 mt-2">
+            <div className="col-7 col-sm-4 mt-2">
               <button className="btn btn-block btn-primary py-3">
                 <span className="font-weight-bold">Register</span>
               </button>
