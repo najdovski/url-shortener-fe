@@ -21,6 +21,8 @@ const Profile = () => {
   const [updatePassword, setUpdatePassword] = useState('');
   const [updateConfirmPassword, setUpdateConfirmPassword] = useState('');
 
+  const [currentName, setCurrentName] = useState('');
+
   const [formValidated, setFormValidated] = useState(false);
   const [validationFailedUpdateName, setValidationFailedUpdateName] = useState('');
   const [validationFailedUpdateEmail, setValidationFailedUpdateEmail] = useState('');
@@ -41,6 +43,7 @@ const Profile = () => {
       setIsAuthenticated(true);
       setUserId(response.data.id);
       setUpdateName(response.data.name);
+      setCurrentName(response.data.name);
       setUpdateEmail(response.data.email);
       setShowLoader(false);
     })
@@ -79,6 +82,7 @@ const Profile = () => {
     })
     .then(response => {
       setSuccessMessage(response.data.message);
+      setCurrentName(updateName);
       setErrorMessage('');
       setUpdatePassword('');
       setUpdateConfirmPassword('');
@@ -124,7 +128,21 @@ const Profile = () => {
     {showLoader ? <Loader /> : null}
 
     {isAuthenticated && userId ?
-      <div className={'container-fluid mt-3 my-auto ' + (showLoader ? ' disabled-div' : '')}>
+    <>
+      <div className="container-fluid profile">
+        <div className="row justify-content-center">
+          <div className="col-12 col-md-9 col-lg-12 mb-4 px-0 mx-0">
+            <div className="row no-gutters shadow-custom">
+              <div className="col page-title align-self-center px-3 rounded mx-3">
+                {currentName ? `${currentName} - ` : ''}
+                <span className="font-weight-bold">Edit Profile</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div className={'container-fluid mt-3 profile my-auto ' + (showLoader ? ' disabled-div' : '')}>
         <div className="row justify-content-center">
           <div className="col-7 col-sm-5 col-md-3 col-xl-3">
             <div className="lottie-animation mx-auto">
@@ -160,6 +178,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
+      </>
       : null }
     </>
   )

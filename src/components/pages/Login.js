@@ -14,7 +14,9 @@ const Login = ({message}) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [propMessage, setPropMessage] = useState('');
   useEffect(() => {
-    setPropMessage(message);
+    if (message) {
+      setPropMessage(message);
+    }
   }, []);
 
   const [formValidated, setFormValidated] = useState(false);

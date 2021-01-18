@@ -62,3 +62,9 @@ a {
 
   max-width: 65rem;
 }
+
+.shorten-slug,
+.original-url {
+  overflow-x: auto !important;
+  height: 100% !important;
+}

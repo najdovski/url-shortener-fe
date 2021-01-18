@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import Loader from '../../common/Loader';
 import { useCookies } from 'react-cookie';
@@ -6,6 +7,7 @@ import axios from 'axios';
 import MyUrl from '../../partials/MyUrl';
 import EmptyAnimation from '../../animations/EmptyAnimation';
 import NotificationModal from '../../common/NotificationModal';
+import AddNewAnimation from '../../animations/AddNewAnimation';
 
 const MyUrls = () => {
   document.title = `${process.env.REACT_APP_NAME} - My URLs`;
@@ -78,17 +80,27 @@ const MyUrls = () => {
       {successMessage ? <NotificationModal closeModal={() => setSuccessMessage('')} message={{ text: successMessage, error: false }} /> : ''}
       {errorMessage ? <NotificationModal closeModal={() => setErrorMessage('')} message={{ text: errorMessage, error: true }} /> : ''}
       {showLoader ? <Loader /> : null}
-      {isAuthenticated && myUrls ?
-        <div className={'container-fluid mt-3 my-urls ' + (myUrls.length <= 0 ? 'my-auto' : '')}>
-          {myUrls.length > 0 ? 
-            <div className="row justify-content-center">
-              <div className="col-12 text-center bg-primary text-white mb-4 py-2 font-weight-bold h5">
-                My URLs
+      <div className="container-fluid my-urls">
+        <div className="row justify-content-center">
+          <div className="col-12 col-md-9 col-lg-12 mb-4 px-0 mx-0">
+            <div className="row no-gutters shadow-custom">
+              <div className="col py-2 align-self-center px-3 font-weight-bold rounded mx-3">My URLs</div>
+              <div className="col-auto text-end mx-4">
+                <button className="btn btn-block p-1 m-0 ">
+                  <Link className="text-white" to="/">
+                    <div className="add-new-animation text-right">
+                      <AddNewAnimation />
+                    </div>
+                  </Link>
+                </button>
+                <div className="add-new-animation-attribution mr-2"><a target="_blank" rel="noopener noreferrer" href="https://lottiefiles.com/25300-plus-button">Jihyun Jang @LottieFiles</a></div>
               </div>
             </div>
-            :
-            null
-          }
+          </div>
+        </div>
+      </div>
+      {isAuthenticated && myUrls ?
+        <div className={'container-fluid mt-2 my-urls ' + (myUrls.length <= 0 ? 'my-auto' : '')}>
           <div className="row px-3 justify-content-center justify-content-lg-start">
             {myUrls.length > 0 ? myUrls.map((url, id) => {
               return (

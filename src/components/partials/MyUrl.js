@@ -131,7 +131,7 @@ const MyUrl = ({url, setFetchUrlsAgain, successMessage, errorMessage}) => {
             editLink ?
             <input type="text" minLength="3" maxLength="20" className="form-control text-muted mt-2 py-2" id="slug" onChange={(e) => handleFormChange(e)} value={values.shorten_url_slug}/>
             :
-            <a target="_blank" onClick={() => updateVisited()} rel="noopener noreferrer" href={url.shorten_url_slug} to={url.shorten_url_slug} className="form-control border-0 no-decorations bg-primary text-white mt-2 py-2">{`${process.env.REACT_APP_URL_NO_PROTOCOL}/${url.shorten_url_slug}`}</a>
+            <a target="_blank" onClick={() => updateVisited()} rel="noopener noreferrer" href={url.shorten_url_slug} to={url.shorten_url_slug} className="form-control border-0 no-decorations bg-primary text-white shorten-slug">{`${process.env.REACT_APP_URL_NO_PROTOCOL}/${url.shorten_url_slug}`}</a>
           }
           {validationFailedShortenUrlSlug ? <div className="x-small text-danger">{validationFailedShortenUrlSlug}</div> : ''}
         </div>
@@ -141,7 +141,9 @@ const MyUrl = ({url, setFetchUrlsAgain, successMessage, errorMessage}) => {
             editLink ?
             <input type="text" minLength="5" className="form-control form-control-sm" id="original" onChange={(e) => handleFormChange(e)} value={values.original_url} required/>
             :
-            <div className="small px-2 p-1 form-control form-control-sm">{url.original_url}</div>
+            <div className="small">
+              <span className="form-control form-control-sm original-url">{url.original_url}</span>
+            </div>
           }
           {validationFailedOriginalUrl ? <div className="x-small text-danger">{validationFailedOriginalUrl}</div> : ''}
         </div>
@@ -156,11 +158,11 @@ const MyUrl = ({url, setFetchUrlsAgain, successMessage, errorMessage}) => {
           <div className="row">
             <div className="col-12 text-right">
               <div className="row">
-                <div className="col-auto align-self-center text-muted small text-left font-weight-bold">{moment(url.created_at).fromNow()}</div>
+                <div className="col-auto align-self-center text-muted small text-left font-weight-bold">Created {moment(url.created_at).fromNow()}</div>
                 <div className="col-12 col-sm text-left text-sm-right text-muted small">
                   <div className="row no-gutters mt-1 mt-sm-0">
                     <div className="col align-self-center">{url.created_at !== url.updated_at ? `Updated ${moment(url.updated_at).fromNow()}` : ''}</div>
-                    <div className="col-12 col-sm-auto align-self-center"><i className="fas fa-eye ml-sm-3"></i> {values.visited}</div>
+                    <div className="col-12 col-sm-auto align-self-center mt-1 mt-sm-0"><i className="fas fa-eye ml-sm-3"></i> {values.visited}</div>
                   </div>
                 </div>
               </div>

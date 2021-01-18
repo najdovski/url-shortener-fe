@@ -1,5 +1,6 @@
 {
   "name": "url-shortener-fe",
+  "homepage": "https://CHANGE_THIS/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
