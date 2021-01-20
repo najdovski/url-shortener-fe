@@ -111,14 +111,19 @@ const MyUrl = ({url, setFetchUrlsAgain, successMessage, errorMessage}) => {
     });
   }
 
+  const [placeholderFavicon, setPlaceholderFavicon] = useState(false);
+
   return (
     <div className="col-12 col-md-9 col-lg-6 col-xl-4 rounded px-4">
       <form className={'row shadow-custom pt-3 mb-4 rounded ' + (formValidated ? 'was-validated' : '')} noValidate onSubmit={(e) => handleFormSubmit(e)}>
         <div className="col-12 text-center">
           <div className="row justify-content-center">
-            <div className="col"></div>
             <div className="col-auto">
-              <i className="fas bg-primary fa-link text-white p-2 h5 rounded-circle"></i>
+              {placeholderFavicon ? 
+                <i className="fas fa-link text-primary mb-2"></i>
+              :
+                <img width="16" className="rounded-circle mb-2" onError={() => setPlaceholderFavicon(true)} src={`https://www.google.com/s2/favicons?domain=${values.original_url}`} alt="Shortened URL original website favicon"/>
+              }
             </div>
             <div className="col text-right small text-muted">
               <i onClick={() => setEditLink(!editLink)} className="cursor-pointer fas fa-edit mr-2"></i>
@@ -129,7 +134,7 @@ const MyUrl = ({url, setFetchUrlsAgain, successMessage, errorMessage}) => {
         <div className="col-12 h5">
           {
             editLink ?
-            <input type="text" minLength="3" maxLength="20" className="form-control text-muted mt-2 py-2" id="slug" onChange={(e) => handleFormChange(e)} value={values.shorten_url_slug}/>
+            <input pattern="[A-Za-z0-9]+" type="text" minLength="3" maxLength="20" className="form-control text-muted mt-2 py-2" id="slug" onChange={(e) => handleFormChange(e)} value={values.shorten_url_slug}/>
             :
             <a target="_blank" onClick={() => updateVisited()} rel="noopener noreferrer" href={url.shorten_url_slug} to={url.shorten_url_slug} className="form-control border-0 no-decorations bg-primary text-white shorten-slug">{`${process.env.REACT_APP_URL_NO_PROTOCOL}/${url.shorten_url_slug}`}</a>
           }

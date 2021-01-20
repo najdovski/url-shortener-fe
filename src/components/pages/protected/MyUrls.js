@@ -21,6 +21,8 @@ const MyUrls = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
+  const [pagination, setPagination] = useState();
+
   useEffect(() => {
     axios({
       method: 'post',
@@ -39,10 +41,12 @@ const MyUrls = () => {
     })
   }, []);
 
-  const fetchMyUrls = () => {
+  const [currentPaginationUrl, setCurrentPaginationUrl] = useState(`${process.env.REACT_APP_API_URL}/url/list/all`);
+
+  const fetchMyUrls = (url = null) => {
     axios({
       method: 'get',
-      url: `${process.env.REACT_APP_API_URL}/url/list/all`,
+      url: url ?? currentPaginationUrl,
       headers: {
         Authorization: `Bearer ${cookies['access_token']}`,
         'Content-Type': 'application/json'
@@ -50,7 +54,8 @@ const MyUrls = () => {
     })
     .then(response => {
       setShowLoader(false);
-      setMyUrls(response.data);
+      setMyUrls(response.data.data);
+      setPagination(response.data);
     })
     .catch(() => {
       setIsAuthenticated(false);
@@ -72,7 +77,15 @@ const MyUrls = () => {
   }
 
   const handleErrorMessage = (msg) => {
+    setShowLoader(true);
     setErrorMessage(msg);
+  }
+
+  const handlePaginationClick = (url) => {
+    if (!url) return;
+    setShowLoader(true);
+    setCurrentPaginationUrl(url);
+    fetchMyUrls(url);
   }
 
   return (
@@ -80,7 +93,7 @@ const MyUrls = () => {
       {successMessage ? <NotificationModal closeModal={() => setSuccessMessage('')} message={{ text: successMessage, error: false }} /> : ''}
       {errorMessage ? <NotificationModal closeModal={() => setErrorMessage('')} message={{ text: errorMessage, error: true }} /> : ''}
       {showLoader ? <Loader /> : null}
-      <div className="container-fluid my-urls">
+      <div className={'container-fluid my-urls ' + (showLoader ? 'disabled-div' : '')}>
         <div className="row justify-content-center">
           <div className="col-12 col-md-9 col-lg-12 mb-4 px-0 mx-0">
             <div className="row no-gutters shadow-custom">
@@ -99,13 +112,14 @@ const MyUrls = () => {
           </div>
         </div>
       </div>
-      {isAuthenticated && myUrls ?
-        <div className={'container-fluid mt-2 my-urls ' + (myUrls.length <= 0 ? 'my-auto' : '')}>
+      {isAuthenticated && pagination && myUrls ?
+      <>
+        <div className={'container-fluid mt-2 my-urls ' + (myUrls.length <= 0 ? 'my-auto' : '') + (showLoader ? ' disabled-div ' : '')}>
           <div className="row px-3 justify-content-center justify-content-lg-start">
-            {myUrls.length > 0 ? myUrls.map((url, id) => {
+            {myUrls.length > 0 ? myUrls.map(url => {
               return (
                 <MyUrl
-                  key={id}
+                  key={url.id}
                   url={url}
                   setFetchUrlsAgain={handleFetchAgain}
                   successMessage={(msg) => handleSuccessMessage(msg)}
@@ -128,8 +142,61 @@ const MyUrls = () => {
               </div>
             </div>
             }
-          </div>
+          </div>       
         </div>
+
+        {/* <div className="container-fluid mt-auto">
+            <nav aria-label="shortened urls pagination">
+              <ul className="pagination justify-content-center">
+                {pagination.links ? pagination.links.map((link, id) => {
+                  return (
+                    <li key={id}
+                      onClick={() => handlePaginationClick(link.url)}
+                      className={'page-item '
+                      + (pagination.current_page === link.label ? ' active ' : '')
+                      + (!link.url ? 'disabled' : 'cursor-pointer')
+                    }>
+                      {isNaN(link.label) || link.label === pagination.last_page || link.label === 1 ?
+                        <span className="page-link">{link.label.toString().replace('&laquo; ', '').replace(' &raquo;', '')}</span>
+                      : 
+                        link.label < pagination.current_page + 3 && link.label > pagination.current_page - 3 ? 
+                        <span className="page-link">{link.label.toString().replace('&laquo; ', '').replace(' &raquo;', '')}</span>
+                      : ''
+                      }
+                    </li>
+                  );
+                })
+                : null}
+              </ul>
+            </nav>
+        </div> */}
+
+        <div className="container-fluid mt-auto">
+            <nav aria-label="shortened urls pagination">
+              <ul className="pagination justify-content-center">
+                {pagination.links ? pagination.links.map((link, id) => {
+                  return (
+                    <span className="wrapper">
+                      {isNaN(link.label) || link.label === pagination.last_page || link.label === 1 ?
+                      <li key={id}
+                        onClick={() => handlePaginationClick(link.url)}
+                        className={'page-item '
+                        + (pagination.current_page === link.label ? ' active ' : '')
+                        + (!link.url ? 'disabled' : 'cursor-pointer')
+                      }>
+                          <span className="page-link">{link.label.toString().replace('&laquo; ', '').replace(' &raquo;', '')}</span>
+                      </li>
+                      :''
+                      }
+                    </span>
+                  );
+                })
+                : null}
+              </ul>
+            </nav>
+        </div>
+
+      </>
         :
           null
         }

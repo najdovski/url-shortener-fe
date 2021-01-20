@@ -106,7 +106,7 @@ const Home = () => {
               <div className="col">
                 <input type="text" minLength="5" onChange={(e) => setOriginalUrl(e.target.value)} value={originalUrl} name="original-url" className="form-control py-4 main-input" placeholder="Paste your link" required/>
                 {validationFailedOriginalUrl ? <div className="small text-danger">{validationFailedOriginalUrl}</div> : ''}
-                <input type="text" minLength="3" maxLength="20" onChange={(e) => setShortenUrlSlug(e.target.value)} value={shortenUrlSlug} name="shorten-url-slug" className="form-control mt-1 optional-input" placeholder="Optional custom short link ending"/>
+                <input pattern="[A-Za-z0-9]+" type="text" minLength="3" maxLength="20" onChange={(e) => setShortenUrlSlug(e.target.value)} value={shortenUrlSlug} name="shorten-url-slug" className="form-control mt-1 optional-input" placeholder="Optional custom short link ending"/>
                 {validationFailedShortenUrlSlug ? <div className="small text-danger">{validationFailedShortenUrlSlug}</div> : ''}
               </div>
               <div className="col-3 col-sm-2 pl-1">
