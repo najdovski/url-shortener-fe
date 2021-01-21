@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
+import CookieConsent from "react-cookie-consent";
 
 const Navbar = () => {
   const [cookies, removeCookie] = useCookies(['access_token']);
@@ -39,6 +40,16 @@ const Navbar = () => {
 
   return (
     <>
+      <CookieConsent
+        location="bottom"
+        buttonText="I understand"
+        cookieName="cookies_consent"
+        style={{ background: "#2B373B" }}
+        buttonStyle={{ background: '#f1075c', color: 'white', fontSize: '13px', borderRadius: '3px'  }}
+      >
+      This website uses cookies to enhance the user experience
+    </CookieConsent>
+
     {redirect ? <Redirect to="/" /> : null}
     <nav className="navbar navbar-expand-md navbar-light">
       <Link to="/" className="navbar-brand"><i className="fas fa-link mr-2 text-primary"></i><span className="font-weight-bold">{process.env.REACT_APP_NAME}</span></Link>
