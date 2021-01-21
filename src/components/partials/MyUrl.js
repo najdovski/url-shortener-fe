@@ -38,6 +38,8 @@ const MyUrl = ({url, setFetchUrlsAgain, successMessage, errorMessage}) => {
         ...values,
         original_url: e.target.value,
       });
+
+      setPlaceholderFavicon(false);
     }
   }
 
@@ -68,7 +70,6 @@ const MyUrl = ({url, setFetchUrlsAgain, successMessage, errorMessage}) => {
       setValidationFailedOriginalUrl('');
       setValidationFailedShortenUrlSlug('');
       setEditLink(false);
-      setFetchUrlsAgain(true);
     })
     .catch((error) => {
       errorMessage(error.response.data.message);
@@ -84,6 +85,8 @@ const MyUrl = ({url, setFetchUrlsAgain, successMessage, errorMessage}) => {
       } else {
         setValidationFailedOriginalUrl('');
       }
+    }).finally(() => {
+      setFetchUrlsAgain(true);
     });
   }
 
@@ -120,7 +123,7 @@ const MyUrl = ({url, setFetchUrlsAgain, successMessage, errorMessage}) => {
           <div className="row justify-content-center">
             <div className="col-auto">
               {placeholderFavicon ? 
-                <i className="fas fa-link text-primary mb-2"></i>
+                <i className="fas fa-link text-primary favicon-placeholder"></i>
               :
                 <img width="16" className="rounded-circle mb-2" onError={() => setPlaceholderFavicon(true)} src={`https://www.google.com/s2/favicons?domain=${values.original_url}`} alt="Shortened URL original website favicon"/>
               }
@@ -162,8 +165,8 @@ const MyUrl = ({url, setFetchUrlsAgain, successMessage, errorMessage}) => {
         <div className="col-12 pt-2 mt-3 pb-2 border-top bg-whitesmoke">
           <div className="row">
             <div className="col-12 text-right">
-              <div className="row">
-                <div className="col-auto align-self-center text-muted small text-left font-weight-bold">Created {moment(url.created_at).fromNow()}</div>
+              <div className="row no-gutters">
+                <div className="col-auto align-self-center text-muted small text-left font-weight-bold">{moment(url.created_at).fromNow()}</div>
                 <div className="col-12 col-sm text-left text-sm-right text-muted small">
                   <div className="row no-gutters mt-1 mt-sm-0">
                     <div className="col align-self-center">{url.created_at !== url.updated_at ? `Updated ${moment(url.updated_at).fromNow()}` : ''}</div>

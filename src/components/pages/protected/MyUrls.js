@@ -145,10 +145,16 @@ const MyUrls = () => {
           </div>       
         </div>
 
-        {/* <div className="container-fluid mt-auto">
+        <div className="container-fluid mt-auto">
             <nav aria-label="shortened urls pagination">
               <ul className="pagination justify-content-center">
                 {pagination.links ? pagination.links.map((link, id) => {
+                if (isNaN(link.label)
+                    || link.label === pagination.last_page
+                    || link.label === 1
+                    || link.label < pagination.current_page + 3
+                    && link.label > pagination.current_page - 3)
+
                   return (
                     <li key={id}
                       onClick={() => handlePaginationClick(link.url)}
@@ -156,40 +162,19 @@ const MyUrls = () => {
                       + (pagination.current_page === link.label ? ' active ' : '')
                       + (!link.url ? 'disabled' : 'cursor-pointer')
                     }>
-                      {isNaN(link.label) || link.label === pagination.last_page || link.label === 1 ?
                         <span className="page-link">{link.label.toString().replace('&laquo; ', '').replace(' &raquo;', '')}</span>
-                      : 
-                        link.label < pagination.current_page + 3 && link.label > pagination.current_page - 3 ? 
-                        <span className="page-link">{link.label.toString().replace('&laquo; ', '').replace(' &raquo;', '')}</span>
-                      : ''
-                      }
                     </li>
-                  );
-                })
-                : null}
-              </ul>
-            </nav>
-        </div> */}
+                    )
 
-        <div className="container-fluid mt-auto">
-            <nav aria-label="shortened urls pagination">
-              <ul className="pagination justify-content-center">
-                {pagination.links ? pagination.links.map((link, id) => {
-                  return (
-                    <span className="wrapper">
-                      {isNaN(link.label) || link.label === pagination.last_page || link.label === 1 ?
-                      <li key={id}
-                        onClick={() => handlePaginationClick(link.url)}
-                        className={'page-item '
-                        + (pagination.current_page === link.label ? ' active ' : '')
-                        + (!link.url ? 'disabled' : 'cursor-pointer')
-                      }>
-                          <span className="page-link">{link.label.toString().replace('&laquo; ', '').replace(' &raquo;', '')}</span>
-                      </li>
-                      :''
-                      }
-                    </span>
-                  );
+                    return (
+                      link.label === 2
+                      || link.label === pagination.last_page - 1 ?
+                        <li className="page-item align-self-end">
+                          <span className="page-link">...</span>
+                        </li>
+                      :
+                        null
+                    )
                 })
                 : null}
               </ul>
