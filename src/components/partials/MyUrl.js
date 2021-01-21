@@ -117,7 +117,7 @@ const MyUrl = ({url, setFetchUrlsAgain, successMessage, errorMessage}) => {
   const [placeholderFavicon, setPlaceholderFavicon] = useState(false);
 
   return (
-    <div className="col-12 col-md-9 col-lg-6 col-xl-4 rounded px-4">
+    <div className="col-12 col-md-6 col-xl-4 rounded px-4">
       <form className={'row shadow-custom pt-3 mb-4 rounded ' + (formValidated ? 'was-validated' : '')} noValidate onSubmit={(e) => handleFormSubmit(e)}>
         <div className="col-12 text-center">
           <div className="row justify-content-center">
@@ -164,7 +164,7 @@ const MyUrl = ({url, setFetchUrlsAgain, successMessage, errorMessage}) => {
         </div>
         <div className="col-12 pt-2 mt-3 pb-2 border-top bg-whitesmoke">
           <div className="row">
-            <div className="col-12 text-right">
+            <div className="col-12 text-right px-md-2 px-lg-3">
               <div className="row no-gutters">
                 <div className="col-auto align-self-center text-muted small text-left font-weight-bold">{moment(url.created_at).fromNow()}</div>
                 <div className="col-12 col-sm text-left text-sm-right text-muted small">

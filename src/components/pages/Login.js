@@ -132,7 +132,7 @@ const Login = ({message}) => {
               <div className="col align-self-center text-danger small">
                 <span className="cursor-pointer" onClick={handleResetPassword}><u>{resetPassword ? 'Back to Login' : 'Forgot Password?' }</u></span>
               </div>
-              <div className="col-7 col-sm-4 mt-2">
+              <div className="col-12 col-sm-7 col-md-4 mt-2">
                 <button className="btn btn-block btn-primary py-3">
                   <span className="font-weight-bold">{resetPassword ? 'Reset Password' : 'Login' }</span>
                 </button>

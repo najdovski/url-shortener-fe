@@ -157,7 +157,7 @@ const Register = ({message}) => {
                 <span className="cursor-pointer" onClick={handleResetEmail}><u>Resend Confirmation Email</u></span>
               </div>
             : ''}
-            <div className="col-7 col-sm-4 mt-2">
+            <div className="col-12 col-sm-7 col-md-4 mt-2">
               <button className="btn btn-block btn-primary py-3">
                 <span className="font-weight-bold">Register</span>
               </button>

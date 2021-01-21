@@ -7,12 +7,11 @@ import axios from 'axios';
 import MyUrl from '../../partials/MyUrl';
 import EmptyAnimation from '../../animations/EmptyAnimation';
 import NotificationModal from '../../common/NotificationModal';
-import AddNewAnimation from '../../animations/AddNewAnimation';
 
 const MyUrls = () => {
   document.title = `${process.env.REACT_APP_NAME} - My URLs`;
 
-  const [cookies] = useCookies(['access_token']);
+  const [cookies, removeCookie] = useCookies(['access_token']);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const [myUrls, setMyUrls] = useState();
@@ -22,6 +21,11 @@ const MyUrls = () => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const [pagination, setPagination] = useState();
+
+  const handleLogout = () => {
+    let expirationTime = new Date(); // make it expired
+    removeCookie('access_token', '', { path: '/', expires: expirationTime });
+  }
 
   useEffect(() => {
     axios({
@@ -37,6 +41,7 @@ const MyUrls = () => {
       fetchMyUrls();
     })
     .catch(() => {
+      handleLogout();
       setIsAuthenticated(false);
     })
   }, []);
@@ -53,11 +58,16 @@ const MyUrls = () => {
       },
     })
     .then(response => {
+      if (response.data.data.length < 1 && response.data.prev_page_url) {
+        fetchMyUrls(response.data.prev_page_url);
+        return;
+      }
       setShowLoader(false);
       setMyUrls(response.data.data);
       setPagination(response.data);
     })
     .catch(() => {
+      handleLogout();
       setIsAuthenticated(false);
     });
   }
@@ -93,20 +103,19 @@ const MyUrls = () => {
       {successMessage ? <NotificationModal closeModal={() => setSuccessMessage('')} message={{ text: successMessage, error: false }} /> : ''}
       {errorMessage ? <NotificationModal closeModal={() => setErrorMessage('')} message={{ text: errorMessage, error: true }} /> : ''}
       {showLoader ? <Loader /> : null}
-      <div className={'container-fluid my-urls ' + (showLoader ? 'disabled-div' : '')}>
+      <div className={'container-fluid my-urls'}>
         <div className="row justify-content-center">
-          <div className="col-12 col-md-9 col-lg-12 mb-4 px-0 mx-0">
+          <div className="col-12 mb-2 mb-lg-3 mt-lg-1 px-0 mx-0">
             <div className="row no-gutters shadow-custom">
               <div className="col py-2 align-self-center px-3 font-weight-bold rounded mx-3">My URLs</div>
-              <div className="col-auto text-end mx-4">
+              <div className="col-auto text-end mx-4 align-self-center">
                 <button className="btn btn-block p-1 m-0 ">
-                  <Link className="text-white" to="/">
-                    <div className="add-new-animation text-right">
-                      <AddNewAnimation />
+                  <Link to="/">
+                    <div className="text-right">
+                      <i className="text-primary fas add-new-icon fa-plus-circle"></i>
                     </div>
                   </Link>
                 </button>
-                <div className="add-new-animation-attribution mr-2"><a target="_blank" rel="noopener noreferrer" href="https://lottiefiles.com/25300-plus-button">Jihyun Jang @LottieFiles</a></div>
               </div>
             </div>
           </div>
@@ -115,7 +124,7 @@ const MyUrls = () => {
       {isAuthenticated && pagination && myUrls ?
       <>
         <div className={'container-fluid mt-2 my-urls ' + (myUrls.length <= 0 ? 'my-auto' : '') + (showLoader ? ' disabled-div ' : '')}>
-          <div className="row px-3 justify-content-center justify-content-lg-start">
+          <div className="row px-3 justify-content-center justify-content-md-start">
             {myUrls.length > 0 ? myUrls.map(url => {
               return (
                 <MyUrl
@@ -147,8 +156,8 @@ const MyUrls = () => {
 
         <div className="container-fluid mt-auto">
             <nav aria-label="shortened urls pagination">
-              <ul className="pagination justify-content-center">
-                {pagination.links ? pagination.links.map((link, id) => {
+              <ul className="pagination justify-content-center flex-wrap">
+                {pagination.total > pagination.per_page && pagination.links ? pagination.links.map((link, id) => {
                 if (isNaN(link.label)
                     || link.label === pagination.last_page
                     || link.label === 1

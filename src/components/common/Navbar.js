@@ -52,9 +52,9 @@ const Navbar = () => {
 
     {redirect ? <Redirect to="/" /> : null}
     <nav className="navbar navbar-expand-md navbar-light">
-      <Link to="/" className="navbar-brand"><i className="fas fa-link mr-2 text-primary"></i><span className="font-weight-bold">{process.env.REACT_APP_NAME}</span></Link>
+      <Link to="/" className="navbar-brand"><img className="logo" src="/logo64.png" alt={`${process.env.REACT_APP_NAME} logo`}/><h5 className="font-weight-bold d-inline website-title">{process.env.REACT_APP_NAME.split('-')[0]} <span className="font-weight-normal">- {process.env.REACT_APP_NAME.split('-')[1]}</span></h5></Link>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-      <i className="fas fa-angle-double-down"></i>
+      <i className="fas fa-sm fa-angle-double-down"></i>
       </button>
       <div className="collapse navbar-collapse" id="navbar">
         <ul className="navbar-nav ml-auto mt-2 mt-sm-0">

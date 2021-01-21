@@ -75,6 +75,8 @@ const Home = () => {
 
   return (
     <>
+      {successMessage ? <NotificationModal closeModal={() => setSuccessMessage('')} message={{ text: successMessage, error: false }} /> : ''}
+      {errorMessage ? <NotificationModal closeModal={() => setErrorMessage('')} message={{ text: errorMessage, error: true }} /> : ''}
       {showLoader ? <Loader /> : null}
       <div className={'container-fluid transition-slow my-auto home' + (showLoader ? ' disabled-div' : '')}>
         <div className="row justify-content-center">
@@ -86,32 +88,41 @@ const Home = () => {
           </div>
         </div>
         <div className="row justify-content-center mt-sm-2">
-          <div className="col-11 col-md-7 heading-big text-uppercase font-weight-bold bg-primary text-white text-right mt-3">
-            Cut <span className="font-weight-light">your</span> links <i className="fas fa-link big-icon"></i> <span className="font-weight-light">here</span>
-          </div>
+          <h3 className="col-11 col-md-7 text-uppercase heading-big font-weight-bold bg-primary text-white text-right mt-3 py-1">
+            AXE <span className="font-weight-light">your</span> links <i className="fas fa-link big-icon"></i> <span className="font-weight-light">here</span>
+          </h3>
         </div>
         <div className="row justify-content-center text-right text-muted small">
-          <div className="col-11 col-md-7 font-weight-light px-0">
-            Convert your <span className="font-weight-bold">super long links</span> into <span className="font-weight-bold text-primary">custom links</span> that are <span className="font-weight-bold">easy to remember!</span>
+          <div className="col-11 col-md-7 font-weight-light px-0 mb-1">
+            <s>Convert</s> <span className="font-weight-bold">AXE</span> your <span className="font-weight-bold">super long links</span> into <span className="font-weight-bold text-primary">custom links</span> that are <span className="font-weight-bold">easy to remember!</span>
           </div>
         </div>
         {errorMessage ? <NotificationModal closeModal={() => setErrorMessage('')} message={{ text: errorMessage, error: true }} /> : ''}
-        <div className="row justify-content-center">
-          <div className={'col-11 col-md-7 my-sm-2 text-center font-weight-bold bg-success text-white py-2 bg-primary '+ (successMessage ? '' : ' hide')}>
-            {successMessage ? <div>{successMessage}: <u><a target="_blank" rel="noopener noreferrer" className="text-white" href={responseShortenUrlSlug}>{`${process.env.REACT_APP_URL}/${responseShortenUrlSlug}`}</a></u></div> : ''}          </div>
+        {responseShortenUrlSlug ?
+        <div className="row justify-content-center mb-2">
+          <div className={'col-11 col-md-7 my-sm-2 text-center bg-success text-white py-2 bg-primary overflow-auto '+ (responseShortenUrlSlug ? '' : ' hide')}>
+            <div>
+              <u>
+                <a target="_blank" rel="noopener noreferrer" className="d-inline-block mx-1 text-white" href={responseShortenUrlSlug}>
+                  {`${process.env.REACT_APP_URL}/${responseShortenUrlSlug}`}
+                </a>
+              </u>
+            </div>
+          </div>
         </div>
-        <div className="row justify-content-center mb-sm-5">
+        : null }
+        <div className="row justify-content-center mb-4 mb-sm-5">
           <div className="col-11 col-md-7 px-0">
             <form className={'row no-gutters ' + (formValidated ? 'was-validated' : '')} noValidate onSubmit={(event) => handleSubmit(event)}>
               <div className="col">
-                <input type="text" minLength="5" onChange={(e) => setOriginalUrl(e.target.value)} value={originalUrl} name="original-url" className="form-control py-4 main-input" placeholder="Paste your link" required/>
+                <input type="text" minLength="5" onChange={(e) => setOriginalUrl(e.target.value)} value={originalUrl} name="original-url" className="form-control py-sm-4 main-input" placeholder="Paste your link" required/>
                 {validationFailedOriginalUrl ? <div className="small text-danger">{validationFailedOriginalUrl}</div> : ''}
-                <input pattern="[A-Za-z0-9]+" type="text" minLength="3" maxLength="20" onChange={(e) => setShortenUrlSlug(e.target.value)} value={shortenUrlSlug} name="shorten-url-slug" className="form-control mt-1 optional-input" placeholder="Optional custom short link ending"/>
+                <input pattern="[A-Za-z0-9]+" type="text" minLength="3" maxLength="20" onChange={(e) => setShortenUrlSlug(e.target.value)} value={shortenUrlSlug} name="shorten-url-slug" className="form-control mt-1 optional-input" placeholder="Custom short link ending"/>
                 {validationFailedShortenUrlSlug ? <div className="small text-danger">{validationFailedShortenUrlSlug}</div> : ''}
               </div>
-              <div className="col-3 col-sm-2 pl-1">
+              <div className="col-auto col-sm-2 col-md-3 col-lg-2 pl-1">
                 <button className="btn btn-block btn-primary h-100 btn-cut-it">
-                  <span className="font-weight-bold">Cut it</span>
+                  <span className="font-weight-bold">Timber!</span>
                 </button>
               </div>
             </form>

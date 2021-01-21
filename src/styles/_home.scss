@@ -24,10 +24,8 @@
 }
 
 .heading-big {
-  font-size: 1.2rem;
-
-  @include media-breakpoint-up(sm) {
-    font-size: 1.5rem;
+  @include media-breakpoint-down(sm) {
+    font-size: 1.2rem;
   }
 }
 

@@ -97,7 +97,7 @@ const ResetPassword = () => {
                 <input type="password" minLength="8" onChange={(e) => setConfirmPassword(e.target.value)} value={confirmPassword} name="confirm-password" className="form-control py-4 main-input" placeholder="Confirm new password" required/>
                 {validationFailedPassword ? <div className="small text-danger">{validationFailedPassword}</div> : ''}
               </div>
-              <div className="col-7 col-sm-4 mt-2">
+              <div className="col-12 col-sm-7 col-md-4 mt-2">
                 <button className="btn btn-block btn-primary py-3">
                   <span className="font-weight-bold">Reset Password</span>
                 </button>

@@ -9,7 +9,7 @@ import NotificationModal from '../../common/NotificationModal';
 const Profile = () => {
   document.title = `${process.env.REACT_APP_NAME} - Profile`;
 
-  const [cookies] = useCookies(['access_token']);
+  const [cookies, removeCookie] = useCookies(['access_token']);
   const [showLoader, setShowLoader] = useState(true);
 
   const [successMessage, setSuccessMessage] = useState('');
@@ -30,6 +30,11 @@ const Profile = () => {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  const handleLogout = () => {
+    let expirationTime = new Date(); // make it expired
+    removeCookie('access_token', '', { path: '/', expires: expirationTime });
+  }
+
   useEffect(() => {
     axios({
       method: 'get',
@@ -47,9 +52,9 @@ const Profile = () => {
       setUpdateEmail(response.data.email);
       setShowLoader(false);
     })
-    .catch(error => {
+    .catch(() => {
       setIsAuthenticated(false);
-      setErrorMessage(error.response.data.message);
+      handleLogout();
       setSuccessMessage('');
     })
   }, []);
@@ -131,9 +136,9 @@ const Profile = () => {
     <>
       <div className="container-fluid profile">
         <div className="row justify-content-center">
-          <div className="col-12 col-md-9 col-lg-12 mb-4 px-0 mx-0">
+          <div className="col-12 mb-2 mb-lg-3 mt-lg-1 px-0 mx-0">
             <div className="row no-gutters shadow-custom">
-              <div className="col page-title align-self-center px-3 rounded mx-3">
+              <div className="col py-2 align-self-center px-3 rounded mx-3">
                 {currentName ? `${currentName} - ` : ''}
                 <span className="font-weight-bold">Edit Profile</span>
               </div>
@@ -169,7 +174,7 @@ const Profile = () => {
                 <input type="password" minLength="8" onChange={(e) => setUpdateConfirmPassword(e.target.value)} required={updatePassword ? true : false} value={updateConfirmPassword} name="confirm-password" className="form-control py-4 main-input" placeholder="Confirm new password" />
                 {validationFailedUpdatePassword ? <div className="small text-danger">{validationFailedUpdatePassword}</div> : ''}
               </div>
-              <div className="col-7 col-sm-4 mt-2">
+              <div className="col-12 col-sm-7 col-md-4 mt-2">
                 <button className="btn btn-block btn-primary py-3">
                   <span className="font-weight-bold">Update</span>
                 </button>

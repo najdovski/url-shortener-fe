@@ -24,3 +24,19 @@
     outline: none;
   }
 }
+
+.logo {
+  margin-right: 0.6rem;
+  max-width: 2.5rem;
+
+  @include media-breakpoint-up(sm) {
+    font-size: 3rem;
+    margin-right: 1rem;
+  }
+}
+
+.website-title {
+  @include media-breakpoint-down(xs) {
+    font-size: 0.9rem;
+  }
+}

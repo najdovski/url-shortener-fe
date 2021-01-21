@@ -20,6 +20,16 @@ a {
 
 .modal-content {
   opacity: 0.9;
+
+  font-size: 0.8rem;
+
+  .fa-times {
+    font-size: 1.5rem;
+  }
+
+  .fa-3x {
+    font-size: 2.2rem;
+  }
 }
 
 .backdrop {
@@ -67,4 +77,14 @@ a {
 .original-url {
   overflow-x: auto !important;
   height: 100% !important;
+}
+
+input {
+  @include media-breakpoint-down(sm) {
+    font-size: 0.8rem !important;
+
+    &::placeholder {
+      font-size: 0.8rem;
+    }
+  }
 }
