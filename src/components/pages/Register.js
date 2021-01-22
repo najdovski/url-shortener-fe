@@ -106,7 +106,6 @@ const Register = ({message}) => {
       },
     })
     .then(response => {
-      console.log(response.data.message);
       setErrorMessage('');
       setSuccessMessage(response.data.message);
     })
