@@ -127,7 +127,7 @@ const Home = () => {
         {responseShortenUrlSlug ?
         <div className="row justify-content-center mb-2 animation-fade-in">
           <div className={'col-11 col-md-7 text-white py-2 '+ (responseShortenUrlSlug ? '' : ' hide')}>
-            <div className="row justify-content-end">
+            <div className="row justify-content-end h-sm-100">
               <div className="col-12 col-sm col-md-10 form-control bg-success text-white cursor-text px-3 border-0 shorten-slug">
                 <a target="_blank" rel="noopener noreferrer" className="text-white" href={responseShortenUrlSlug}>
                   {`${process.env.REACT_APP_URL}/${responseShortenUrlSlug}`}

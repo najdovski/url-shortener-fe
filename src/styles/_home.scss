@@ -15,14 +15,6 @@
   }
 }
 
-.big-icon {
-  -webkit-animation: rotating 7s linear infinite;
-  -moz-animation: rotating 7s linear infinite;
-  -ms-animation: rotating 7s linear infinite;
-  -o-animation: rotating 7s linear infinite;
-  animation: rotating 7s linear infinite;
-}
-
 .heading-big {
   @include media-breakpoint-down(sm) {
     font-size: 1.2rem;

@@ -24,3 +24,9 @@
 .cursor-text {
   cursor: text;
 }
+
+.h-sm-100 {
+  @include media-breakpoint-up(sm) {
+    height: 100% !important;
+  }
+}

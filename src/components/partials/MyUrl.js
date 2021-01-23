@@ -3,7 +3,7 @@ import moment from 'moment';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 
-const MyUrl = ({url, setFetchUrlsAgain, successMessage, errorMessage}) => {
+const MyUrl = ({url, setShowLoader, setFetchUrlsAgain, successMessage, errorMessage}) => {
   const [cookies] = useCookies(['access_token']);
 
   const [editLink, setEditLink] = useState(false);
@@ -91,6 +91,7 @@ const MyUrl = ({url, setFetchUrlsAgain, successMessage, errorMessage}) => {
   }
 
   const handleDeleteLink = () => {
+    setShowLoader(true);
     axios({
       method: 'delete',
       url: `${process.env.REACT_APP_API_URL}/url/delete/${url.id}`,

@@ -134,6 +134,7 @@ const MyUrls = () => {
                 <MyUrl
                   key={url.id}
                   url={url}
+                  setShowLoader={() => setShowLoader(true)}
                   setFetchUrlsAgain={handleFetchAgain}
                   successMessage={(msg) => handleSuccessMessage(msg)}
                   errorMessage={(msg) => handleErrorMessage(msg)}
