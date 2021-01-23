@@ -52,6 +52,8 @@ const MyUrl = ({url, setShowLoader, setFetchUrlsAgain, successMessage, errorMess
       setFormValidated(false);
     };
 
+    setShowLoader(true);
+
     axios({
       method: 'put',
       url: `${process.env.REACT_APP_API_URL}/url/update`,
