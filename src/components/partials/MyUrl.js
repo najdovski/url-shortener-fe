@@ -145,7 +145,6 @@ const MyUrl = ({url, setShowLoader, setFetchUrlsAgain, successMessage, errorMess
           {validationFailedShortenUrlSlug ? <div className="x-small text-danger">{validationFailedShortenUrlSlug}</div> : ''}
         </div>
         <div className="col-12">
-          { url.id }
           <div className="small font-weight-bold mb-1">Original URL</div>
           {
             editLink ?
