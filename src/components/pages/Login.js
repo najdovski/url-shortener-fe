@@ -5,6 +5,7 @@ import LoginAnimation from '../animations/LoginAnimation';
 import Loader from '../common/Loader';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
+import UpdateHtml from '../common/UpdateHtml';
 
 const Login = ({message}) => {
   document.title = `${process.env.REACT_APP_NAME} - Login`;
@@ -98,6 +99,7 @@ const Login = ({message}) => {
 
   return (
     <>
+      <UpdateHtml component="Login" />
       {redirect ? <Redirect to="/my-urls"  /> : null}
       {showLoader ? <Loader /> : null}
       <div className={'container-fluid transition-slow my-auto' + (showLoader ? ' disabled-div' : '')}>
@@ -110,7 +112,7 @@ const Login = ({message}) => {
         </div>
         <div className="row justify-content-center">
           <div className="col-8 col-sm-6 col-lg-4 col-xl-3 mt-3 text-right">
-            <div className="small mb-4"><a target="_blank" rel="noopener noreferrer" href="https://lottiefiles.com/38435-register">Avinash Reddy @LottieFiles</a></div>
+            <div className="small mb-4"><a target="_blank" rel="noopener noreferrer nofollow" href="https://lottiefiles.com/38435-register">Avinash Reddy @LottieFiles</a></div>
           </div>
         </div>
         {successMessage ? <NotificationModal closeModal={() => setSuccessMessage('')} message={{ text: successMessage, error: false }} /> : ''}

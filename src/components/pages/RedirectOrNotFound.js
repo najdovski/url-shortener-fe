@@ -3,6 +3,7 @@ import axios from 'axios';
 import NotFoundAnimation from '../animations/NotFoundAnimation';
 import Navbar from '../common/Navbar';
 import Footer from '../common/Footer';
+import UpdateHtml from '../common/UpdateHtml';
 
 const RedirectOrNotFound = () => {
   const [show404, setShow404] = useState(false);
@@ -24,6 +25,7 @@ const RedirectOrNotFound = () => {
   if (show404) {
     return (
       <>
+      <UpdateHtml component="RedirectOrNotFound" />
       <Navbar />
         <div className="container-fluid my-auto">
           <div className="row justify-content-center">
@@ -31,7 +33,7 @@ const RedirectOrNotFound = () => {
               <div className="lottie-animation-404 mx-auto mt-4">
                 <NotFoundAnimation />
               </div>
-              <div className="mr-sm-4 mr-lg-5 small text-right"><a target="_blank" rel="noopener noreferrer" href="https://lottiefiles.com/40806-error-404">Mark Arrow @LottieFiles</a></div>
+              <div className="mr-sm-4 mr-lg-5 small text-right"><a target="_blank" rel="noopener noreferrer nofollow" href="https://lottiefiles.com/40806-error-404">Mark Arrow @LottieFiles</a></div>
             </div>
           </div>
         </div>

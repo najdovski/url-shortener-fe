@@ -5,6 +5,7 @@ import NotificationModal from '../common/NotificationModal';
 import axios from 'axios';
 import Loader from '../common/Loader';
 import { useCookies } from 'react-cookie';
+import UpdateHtml from '../common/UpdateHtml';
 
 const Register = ({message}) => {
   document.title = `${process.env.REACT_APP_NAME} - Register`;
@@ -119,6 +120,7 @@ const Register = ({message}) => {
 
   return (
     <>
+    <UpdateHtml component="Register" />
     {cookies['access_token'] ? <Redirect to ="/" /> : null}
     {showLoader ? <Loader /> : null}
     <div className={'container-fluid transition-slow my-auto' + (showLoader ? ' disabled-div' : '')}>
@@ -127,7 +129,7 @@ const Register = ({message}) => {
           <div className="lottie-animation mx-auto">
             <RegisterAnimation />
           </div>
-          <div className="mr-sm-4 mr-lg-5 small mb-4"><a target="_blank" rel="noopener noreferrer" href="https://lottiefiles.com/38435-register">Avinash Reddy @LottieFiles</a></div>
+          <div className="mr-sm-4 mr-lg-5 small mb-4"><a target="_blank" rel="noopener noreferrer nofollow" href="https://lottiefiles.com/38435-register">Avinash Reddy @LottieFiles</a></div>
         </div>
       </div>
       {successMessage ? <NotificationModal closeModal={() => setSuccessMessage('')} message={{ text: successMessage, error: false }} /> : ''}

@@ -7,6 +7,7 @@ import axios from 'axios';
 import MyUrl from '../../partials/MyUrl';
 import EmptyAnimation from '../../animations/EmptyAnimation';
 import NotificationModal from '../../common/NotificationModal';
+import UpdateHtml from '../../common/UpdateHtml';
 
 const MyUrls = () => {
   document.title = `${process.env.REACT_APP_NAME} - My URLs`;
@@ -100,6 +101,7 @@ const MyUrls = () => {
 
   return (
     <>
+      <UpdateHtml component="MyUrls" />
       {successMessage ? <NotificationModal closeModal={() => setSuccessMessage('')} message={{ text: successMessage, error: false }} /> : ''}
       {errorMessage ? <NotificationModal closeModal={() => setErrorMessage('')} message={{ text: errorMessage, error: true }} /> : ''}
       {showLoader ? <Loader /> : null}
@@ -107,7 +109,9 @@ const MyUrls = () => {
         <div className="row justify-content-center">
           <div className="col-12 mb-2 mb-lg-3 mt-lg-1 px-0 mx-0">
             <div className="row no-gutters shadow-custom">
-              <div className="col py-2 align-self-center px-3 font-weight-bold rounded mx-3">My URLs</div>
+              <div className="col py-2 align-self-center px-3 rounded mx-3">
+                <h6 className="d-inline font-weight-bold">My URLs</h6>
+              </div>
               <div className="col-auto text-end mx-4 align-self-center">
                 <button className="btn btn-block p-1 m-0 ">
                   <Link to="/">
@@ -146,7 +150,7 @@ const MyUrls = () => {
                   <div className="lottie-animation empty-animation mx-auto">
                     <EmptyAnimation />
                   </div>
-                  <div className="mr-sm-4 mr-lg-5 small text-right"><a target="_blank" rel="noopener noreferrer" href="https://lottiefiles.com/5081-empty-box">Taha Sami @LottieFiles</a></div>
+                  <div className="mr-sm-4 mr-lg-5 small text-right"><a target="_blank" rel="noopener noreferrer nofollow" href="https://lottiefiles.com/5081-empty-box">Taha Sami @LottieFiles</a></div>
                 </div>
               </div>
             </div>

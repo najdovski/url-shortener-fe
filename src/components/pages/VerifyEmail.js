@@ -3,6 +3,7 @@ import axios from 'axios';
 import Login from './Login';
 import Register from './Register';
 import Loader from '../common/Loader';
+import UpdateHtml from '../common/UpdateHtml';
 
 const VerifyEmail = () => {
   document.title = `${process.env.REACT_APP_NAME} - Verify Email`;
@@ -41,6 +42,7 @@ const VerifyEmail = () => {
 
   return (
     <>
+      <UpdateHtml component="VerifyEmail" />
       {verifiedMessage || alreadyVerifiedMessage || invalidVerificationURL ? null : <Loader /> }{}
       {verifiedMessage ? <Login message={{ text: verifiedMessage, error: false }} /> : ''}
       {alreadyVerifiedMessage ? <Login message={{ text: alreadyVerifiedMessage, error: false }} /> : ''}

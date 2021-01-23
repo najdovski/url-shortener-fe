@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import Loader from '../../common/Loader';
 import NotificationModal from '../../common/NotificationModal';
+import UpdateHtml from '../../common/UpdateHtml';
 
 const Profile = () => {
   document.title = `${process.env.REACT_APP_NAME} - Profile`;
@@ -127,6 +128,7 @@ const Profile = () => {
 
   return (
     <>
+    <UpdateHtml component="Profile"/>
     {successMessage ? <NotificationModal closeModal={() => setSuccessMessage('')} message={{ text: successMessage, error: false }} /> : ''}
     {errorMessage ? <NotificationModal closeModal={() => setErrorMessage('')} message={{ text: errorMessage, error: true }} /> : ''}
     {!cookies['access_token'] ? <Redirect to ="/" /> : null}
@@ -140,7 +142,7 @@ const Profile = () => {
             <div className="row no-gutters shadow-custom">
               <div className="col py-2 align-self-center px-3 rounded mx-3">
                 {currentName ? `${currentName} - ` : ''}
-                <span className="font-weight-bold">Edit Profile</span>
+                <h6 className="d-inline font-weight-bold">Edit Info</h6>
               </div>
             </div>
           </div>
@@ -153,7 +155,7 @@ const Profile = () => {
             <div className="lottie-animation mx-auto">
               <ProfileAnimation />
             </div>
-            <div className="small text-right"><a target="_blank" rel="noopener noreferrer" href="https://lottiefiles.com/36519-info-animation">Irfan Munawar @LottieFiles</a></div>
+            <div className="small text-right"><a target="_blank" rel="noopener noreferrer nofollow" href="https://lottiefiles.com/36519-info-animation">Irfan Munawar @LottieFiles</a></div>
           </div>
         </div>
         <div className="row justify-content-center my-4">

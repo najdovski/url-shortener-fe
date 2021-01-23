@@ -5,6 +5,7 @@ import Loader from '../common/Loader';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import NotificationModal from '../common/NotificationModal';
+import UpdateHtml from '../common/UpdateHtml';
 
 const ResetPassword = () => {
   document.title = `${process.env.REACT_APP_NAME} - Reset Password`;
@@ -73,6 +74,7 @@ const ResetPassword = () => {
 
   return (
     <>
+      <UpdateHtml component="ResetPassword"/>
       {redirect ? <Redirect to ="/login" /> : null}
       {showLoader ? <Loader /> : null}
       {successMessage ? <NotificationModal closeModal={() => redirectLogin()} message={{ text: successMessage, error: false }} /> : ''}
@@ -83,7 +85,7 @@ const ResetPassword = () => {
             <div className="lottie-animation mx-auto">
               <ResetPasswordAnimation />
             </div>
-            <div className="mr-sm-4 mr-lg-5 small mb-4"><a target="_blank" rel="noopener noreferrer" href="https://lottiefiles.com/8857-data-security">Shinan @LottieFiles</a></div>
+            <div className="mr-sm-4 mr-lg-5 small mb-4"><a target="_blank" rel="noopener noreferrer nofollow" href="https://lottiefiles.com/8857-data-security">Shinan @LottieFiles</a></div>
           </div>
         </div>
 

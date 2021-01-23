@@ -21,7 +21,7 @@ const MyUrl = ({url, setFetchUrlsAgain, successMessage, errorMessage}) => {
   const updateVisited = () => {
     setValues({
       ...values,
-      visited: values.visited + 1,
+      visited: parseInt(values.visited) + 1,
     });
   }
 
@@ -144,6 +144,7 @@ const MyUrl = ({url, setFetchUrlsAgain, successMessage, errorMessage}) => {
           {validationFailedShortenUrlSlug ? <div className="x-small text-danger">{validationFailedShortenUrlSlug}</div> : ''}
         </div>
         <div className="col-12">
+          { url.id }
           <div className="small font-weight-bold mb-1">Original URL</div>
           {
             editLink ?

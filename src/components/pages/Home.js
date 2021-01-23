@@ -4,6 +4,7 @@ import NotificationModal from '../common/NotificationModal';
 import axios from 'axios';
 import Loader from '../common/Loader';
 import { useCookies } from 'react-cookie';
+import UpdateHtml from '../common/UpdateHtml';
 
 const Home = () => {
   document.title = process.env.REACT_APP_NAME;
@@ -73,8 +74,33 @@ const Home = () => {
     });
   }
 
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    if (typeof(navigator.clipboard) === 'undefined') {
+      const textArea = document.createElement('textarea');
+      textArea.value = `${process.env.REACT_APP_URL}/${responseShortenUrlSlug}`;
+      textArea.style.position = 'fixed';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        textArea.remove();
+      } catch {
+        setErrorMessage(`Couldn't copy`);
+        setCopied(false);
+      }
+    } else {
+      navigator.clipboard.writeText(`${process.env.REACT_APP_URL}/${responseShortenUrlSlug}`);
+    }
+
+    setCopied(true);
+  }
+
   return (
     <>
+      <UpdateHtml component="Home" />
       {successMessage ? <NotificationModal closeModal={() => setSuccessMessage('')} message={{ text: successMessage, error: false }} /> : ''}
       {errorMessage ? <NotificationModal closeModal={() => setErrorMessage('')} message={{ text: errorMessage, error: true }} /> : ''}
       {showLoader ? <Loader /> : null}
@@ -84,7 +110,7 @@ const Home = () => {
             <div className="lottie-animation mx-auto">
               <HomeAnimation />
             </div>
-            <div className="mr-sm-4 mr-lg-5 small"><a target="_blank" rel="noopener noreferrer" href="https://lottiefiles.com/23905-timberman-axe">Agnis Design @LottieFiles</a></div>
+            <div className="mr-sm-4 mr-lg-5 small"><a target="_blank" rel="noopener noreferrer nofollow" href="https://lottiefiles.com/23905-timberman-axe">Agnis Design @LottieFiles</a></div>
           </div>
         </div>
         <div className="row justify-content-center mt-sm-2">
@@ -93,20 +119,23 @@ const Home = () => {
           </h3>
         </div>
         <div className="row justify-content-center text-right text-muted small">
-          <div className="col-11 col-md-7 font-weight-light px-0 mb-1">
+          <div className="col-11 col-md-7 font-weight-light px-0 mb-2">
             <s>Convert</s> <span className="font-weight-bold">AXE</span> your <span className="font-weight-bold">super long links</span> into <span className="font-weight-bold text-primary">custom links</span> that are <span className="font-weight-bold">easy to remember!</span>
           </div>
         </div>
         {errorMessage ? <NotificationModal closeModal={() => setErrorMessage('')} message={{ text: errorMessage, error: true }} /> : ''}
         {responseShortenUrlSlug ?
-        <div className="row justify-content-center mb-2">
-          <div className={'col-11 col-md-7 my-sm-2 text-center bg-success text-white py-2 bg-primary overflow-auto '+ (responseShortenUrlSlug ? '' : ' hide')}>
-            <div>
-              <u>
-                <a target="_blank" rel="noopener noreferrer" className="d-inline-block mx-1 text-white" href={responseShortenUrlSlug}>
+        <div className="row justify-content-center mb-2 animation-fade-in">
+          <div className={'col-11 col-md-7 text-white py-2 '+ (responseShortenUrlSlug ? '' : ' hide')}>
+            <div className="row justify-content-end">
+              <div className="col-12 col-sm col-md-10 form-control bg-success text-white cursor-text px-3 border-0 shorten-slug">
+                <a target="_blank" rel="noopener noreferrer" className="text-white" href={responseShortenUrlSlug}>
                   {`${process.env.REACT_APP_URL}/${responseShortenUrlSlug}`}
                 </a>
-              </u>
+              </div>
+              <div className="col-5 col-sm-auto col-md-2 mt-1 mt-sm-0 pr-0">
+                <button onClick={() => handleCopy()} className="btn btn-block btn-success form-control">{copied ? 'Copied' : 'Copy' }</button>
+              </div>
             </div>
           </div>
         </div>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+<url>
+  <loc>https://axe.lu/</loc>
+  <lastmod>2021-01-23T01:18:22+00:00</lastmod>
+  <changefreq>yearly</changefreq>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://axe.lu/login</loc>
+  <lastmod>2021-01-23T01:18:22+00:00</lastmod>
+  <changefreq>yearly</changefreq>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://axe.lu/register</loc>
+  <lastmod>2021-01-23T01:18:22+00:00</lastmod>
+  <changefreq>yearly</changefreq>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://axe.lu/email/verify</loc>
+  <lastmod>2021-01-23T01:18:22+00:00</lastmod>
+  <changefreq>yearly</changefreq>
+  <priority>0.6</priority>
+</url>
+<url>
+  <loc>https://axe.lu/my-urls</loc>
+  <lastmod>2021-01-23T01:18:22+00:00</lastmod>
+  <changefreq>yearly</changefreq>
+  <priority>0.9</priority>
+</url>
+<url>
+  <loc>https://axe.lu/profile</loc>
+  <lastmod>2021-01-23T01:18:22+00:00</lastmod>
+  <changefreq>yearly</changefreq>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://axe.lu/forgot-password</loc>
+  <lastmod>2021-01-23T01:18:22+00:00</lastmod>
+  <changefreq>yearly</changefreq>
+  <priority>0.6</priority>
+</url>
+
+</urlset>
