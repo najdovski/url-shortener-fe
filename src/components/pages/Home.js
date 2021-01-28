@@ -106,7 +106,7 @@ const Home = () => {
       {showLoader ? <Loader /> : null}
       <div className={'container-fluid transition-slow my-auto home' + (showLoader ? ' disabled-div' : '')}>
         <div className="row justify-content-center">
-          <div className="col-10 col-sm-9 col-md-6 col-xl-4 text-right">
+          <div className="col-10 col-sm-9 col-md-6 col-lg-4 col-xl-3 text-right">
             <div className="lottie-animation mx-auto">
               <HomeAnimation />
             </div>
